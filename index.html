@@ -2,42 +2,29 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ห้องเรียนครูแพร · ครู</title>
-<!-- ทางลัดเว็บครู: เปิดจากไอคอนหน้าจอหลัก = ไปเว็บครูทันที · เปิดในเบราว์เซอร์ปกติ = แสดงปุ่มและวิธีเพิ่มไอคอน
-     เว็บครูตั้งให้เปิดได้ "เฉพาะฉัน" (ต้องล็อกอิน Google) จึงพาไปเปิดตรง ๆ ไม่ฝังในหน้านี้
-     เพราะหน้าล็อกอินของ Google ไม่ยอมให้ฝัง และ iPhone ไม่ส่งการล็อกอินเข้าไปในกรอบที่ฝัง -->
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ห้องเรียนครูแพร</title>
+<!-- หน้าครอบเว็บนักเรียน: มีไว้ให้ "เพิ่มไปยังหน้าจอหลัก" ได้ไอคอนทั้ง iPhone และ Android -->
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="ครูแพร · ครู">
-<meta name="theme-color" content="#142B6F">
+<meta name="apple-mobile-web-app-title" content="ห้องเรียนครูแพร">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1D3C94">
 <style>
-  html, body { margin: 0; height: 100%; background: #142B6F; font-family: sans-serif; }
-  body { display: grid; place-items: center; text-align: center; color: #fff; }
-  a { display: inline-block; margin-top: 16px; padding: 12px 22px; border-radius: 999px; background: #FFC72C; color: #142B6F; font-weight: 700; text-decoration: none; }
-  img { width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 0 0 3px rgba(255,255,255,.35); }
-  .how { margin-top: 22px; font-size: 14px; line-height: 1.7; color: rgba(255,255,255,.8); }
+  html, body { margin: 0; height: 100%; background: #1D3C94; overflow: hidden; }
+  body { padding-top: env(safe-area-inset-top); box-sizing: border-box; }
+  iframe { display: block; width: 100%; height: 100%; border: 0; background: #EDF1FA; }
+  .wait { position: fixed; inset: 0; display: grid; place-items: center; color: #FFC72C; font: 600 18px sans-serif; pointer-events: none; z-index: 1; }
 </style>
 </head>
 <body>
-<div>
-  <img src="icon-192.png" alt="">
-  <p id="msg">ห้องเรียนครูแพร · สำหรับครู</p>
-  <!-- ลิงก์เว็บครู ถ้า deploy ใหม่แล้วลิงก์เปลี่ยน ให้แก้บรรทัดนี้บรรทัดเดียว -->
-  <a id="go" href="https://script.google.com/macros/s/AKfycbwwr1KOk3_2-7PfUHNvSlGYttwWikkLXJUaf9mx6X9oKzqegOxVTOKoFSLMKCcaA6Bn/exec">เปิดเว็บครู</a>
-  <p class="how" id="how">เพิ่มไอคอนไว้หน้าจอมือถือ<br>iPhone: ปุ่มแชร์ → เพิ่มไปยังหน้าจอโฮม<br>Android: ⋮ → เพิ่มไปยังหน้าจอหลัก</p>
-</div>
-<script>
-  // เปิดจากไอคอนบนหน้าจอหลัก → ไปเว็บครูทันที (เปิดในเบราว์เซอร์ปกติจะไม่พาไป เพื่อให้กดเพิ่มไปยังหน้าจอหลักได้)
-  var fromHome = window.navigator.standalone === true || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
-  if (fromHome) {
-    document.getElementById('msg').textContent = 'กำลังเปิดเว็บครู…';
-    document.getElementById('how').style.display = 'none';
-    location.replace(document.getElementById('go').href);
-  }
-</script>
+<div class="wait" id="wait">กำลังเปิดห้องเรียน…</div>
+<!-- ลิงก์เว็บนักเรียน (เว็บแอปของระบบติดตามงาน) ถ้า deploy ใหม่แล้วลิงก์เปลี่ยน ให้แก้บรรทัดนี้บรรทัดเดียว -->
+<iframe id="app" title="ห้องเรียนครูแพร" allow="camera; clipboard-write"
+  src="https://script.google.com/macros/s/AKfycbyolvoWhT1DI7n5Wk8I_9wcw3CGF8AVZvRoOFYN4SuJSxjO2uWbs9C3pY1bD8RPCWh-3A/exec"
+  onload="document.getElementById('wait').style.display='none'"></iframe>
 </body>
 </html>
